@@ -10,9 +10,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 
 # Create your views here.
-def index(request):
-    return render(request, 'index.html')
-
 class ToolCreate(CreateView):
     model = Tool
     fields = '__all__'
@@ -32,14 +29,25 @@ class ToolDelete(DeleteView):
     model = Tool
     success_url = '/tools'
 
+# def update_profile(request, user_id):
+#     user = User.objects.get(pk=user_id)
+#     user.profile.bio = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
+#     user.save()
 
+def index(request):
+    return render(request, 'index.html')
 
+def tools_index(request):
+    tools = Tool.objects.all()
+    return render(request, 'tools/index.html', {'tools': tools})
 
+def tools_detail(request, tool_id):
+    tool = Tool.objects.get(id=tool_id)
+    return render(request, 'tools/detail.html')
 
 
 # Update profile
 @login_required
-@transaction.atomic
 def update_profile(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
