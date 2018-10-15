@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import date
+from django.urls import reverse
 
 RATINGS = (
     ('1', 'Broken'),
@@ -32,6 +33,12 @@ class Profile(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     zipcode = models.IntegerField()
+
+    def __str__(self):
+        return self.user
+    
+    def get_absolute_url(self):
+        return reverse('users_detail', kwargs={'user_id': user.id})
 
 class Tool(models.Model):
     tool_name = models.CharField(max_length=75)

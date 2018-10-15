@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+
 {% block content %}
 
-<form method="post">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        <button type="submit">Save changes</button>
-</form>
+<h1>{{ username }}'s tools:</h1>
 
+{% for tool in tools %}
+        <a href="/tools/{{ tool.id }}">
+        <h3>{{ tool.name }}</h3>
+        </a>
+{% endfor %}
 {% endblock %}

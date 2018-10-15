@@ -109,7 +109,7 @@ def signup(request):
 def profile(request, username):
     if username == request.user.username:
         user = User.objects.get(username=username)
-        skills = Skill.objects.filter(user=user)
-        return render(request, 'profile.html', {'username': username, 'skills': skills})
+        profile = Profile.objects.filter(user=user)
+        return render(request, 'profile.html', {'username': username, 'profile': profile})
     else:
         return HttpResponseRedirect('/')
