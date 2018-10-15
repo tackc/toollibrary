@@ -1,12 +1,39 @@
 from django.shortcuts import render
 from .forms import LoginForm
+from .models import Tool, Profile, Category, ToolRating
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate, login, logout
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.http import HttpResponseRedirect
 
 # Create your views here.
+def index(request):
+    return render(request, 'index.html')
+
+class ToolCreate(CreateView):
+    model = Tool
+    fields = '__all__'
+    
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect('/tools/')
+
+class ToolUpdate(UpdateView):
+    model = Tool
+    fields = '__all__'
+
+@method_decorator(login_required, name='dispatch')
+class ToolDelete(DeleteView):
+    model = Tool
+    success_url = '/tools'
+
+
+
 
 
 
