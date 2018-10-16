@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import LoginForm
+from .forms import LoginForm, ProfileForm
 from .models import Tool, Profile, Category, ToolRating
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -29,10 +29,10 @@ class ToolDelete(DeleteView):
     model = Tool
     success_url = '/tools'
 
-def update_profile(request, user_id):
-    user = User.objects.get(pk=user_id)
-    user.profile.bio = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
-    user.save()
+# def update_profile(request, user_id):
+#     user = User.objects.get(pk=user_id)
+#     user.profile.bio = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
+#     user.save()
 
 def index(request):
     return render(request, 'index.html')
@@ -100,7 +100,10 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return HttpResponseRedirect('profile')
+        # else:
+        #     print("this is the form...")
+        #     print(form)
     else:
         form = UserCreationForm()
         return render(request, 'signup.html', {'form': form})

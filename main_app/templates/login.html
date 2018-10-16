@@ -2,12 +2,27 @@
 
 {% block content %}
 <div class="centered">
+    <div class="col s8 m8">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+            <span class="card-title"><h3>Login</h3></span>
+            <form method="POST" action=".">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {{ profile_form.as_p }}
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="centered">
     <h3>Login</h3>
     <form method="POST" action=".">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />
     </form>
-</div>
+</div> -->
 
 {% endblock %}

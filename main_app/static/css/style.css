@@ -26,15 +26,17 @@ nav li a {
 } */
 
 .parallax img {
-    /* width: 100%; */
+    width: 100%;
     min-height: 100%;
     /* width: auto; */
-    /* background-size: cover; */
+    background-size: cover;
 }
 
 @media only screen and (min-width : 768px) {
     .parallax img {
         background-size: cover;
-        min-height: 400px;
+        min-height: 100%;
+        width: auto;
+        /* overflow: hidden; */
     }
 }

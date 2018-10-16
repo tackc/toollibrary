@@ -29,10 +29,10 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=30)
     bio = models.TextField(max_length=500)
     street1 = models.CharField(max_length=75)
-    street2 = models.CharField(max_length=75)
+    street2 = models.CharField(max_length=75, blank=True)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
-    zipcode = models.IntegerField()
+    zipcode = models.CharField(max_length=5)
 
     def __str__(self):
         return self.user
@@ -60,6 +60,6 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()
