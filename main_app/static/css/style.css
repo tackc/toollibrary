@@ -1,6 +1,40 @@
 body {
     font-family: 'Lora', serif;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main {
+    flex: 1 0 auto;
 }
 h3 {
     font-family: 'Bungee', cursive;
+}
+
+nav li a {
+    color: black !important;
+}
+
+.centered {
+    margin: 0 auto !important;
+    text-align: center;
+}
+
+/* .card-content {
+    max-width: 80%;
+    align-content: center;
+} */
+
+.parallax img {
+    /* width: 100%; */
+    min-height: 100%;
+    /* width: auto; */
+    /* background-size: cover; */
+}
+
+@media only screen and (min-width : 768px) {
+    .parallax img {
+        background-size: cover;
+        min-height: 400px;
+    }
 }
