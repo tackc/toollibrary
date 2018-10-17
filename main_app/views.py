@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import LoginForm, ProfileForm
 from .models import Tool, Profile, Category, ToolRating
 from django.contrib.auth.forms import UserCreationForm
@@ -29,7 +29,7 @@ def update_profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, _('Your profile was successfully updated!'))
-            return redirect('settings:profile')
+            return redirect('settings/profile')
         else:
             messages.error(request, _('Please correct the error below.'))
     else:
@@ -71,6 +71,23 @@ class ToolDelete(DeleteView):
     model = Tool
     success_url = '/tools'
 
+def add_photo(request, tool_id):
+	# photo-file was the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            photo = Photo(url=url, cat_id=cat_id)
+            photo.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('tools_detail', tool_id=tool_id)
 
 # Login, logout, signup, profile views
 def login_view(request):
@@ -106,9 +123,9 @@ def signup(request):
             user = form.save()
             login(request, user)
             return HttpResponseRedirect('profile')
-        # else:
-        #     print("this is the form...")
-        #     print(form)
+        else:
+            print("this is the form...")
+            print(form)
     else:
         form = UserCreationForm()
         return render(request, 'signup.html', {'form': form})

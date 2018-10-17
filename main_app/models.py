@@ -25,17 +25,17 @@ CATEGORIES = (
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    bio = models.TextField(max_length=500)
-    street1 = models.CharField(max_length=75)
-    street2 = models.CharField(max_length=75, blank=True)
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    zipcode = models.CharField(max_length=5)
+    first_name = models.CharField(max_length=30, null=True)
+    last_name = models.CharField(max_length=30, null=True)
+    bio = models.TextField(max_length=500, null=True)
+    street1 = models.CharField(max_length=75, null=True)
+    street2 = models.CharField(max_length=75, blank=True, null=True)
+    city = models.CharField(max_length=50, null=True)
+    state = models.CharField(max_length=50, null=True)
+    zipcode = models.CharField(max_length=5, null=True)
 
     def __str__(self):
-        return self.user
+        return "self.user"
     
     def get_absolute_url(self):
         return reverse('users_detail', kwargs={'user_id': user.id})
@@ -66,6 +66,10 @@ class ToolPhoto(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 # @receiver(post_save, sender=User)
 # def save_user_profile(sender, instance, **kwargs):

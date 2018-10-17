@@ -36,17 +36,15 @@ nav li a {
 } */
 
 .parallax-container .parallax {
-    /* width: 100%; */
-    min-height: 400px;
+    height: 400px;
     min-width: 100%;
     overflow: hidden;
-    position: relative;
-    /* width: auto; */
-    /* background-size: cover; */
+    position: absolute;
+    /* background-size: contain; */
 }
 
 @media only screen and (min-width : 768px) {
-    .parallax img {
+    .parallax-container .parallax img {
         background-size: cover;
         min-height: 100%;
         min-width: 100%;
