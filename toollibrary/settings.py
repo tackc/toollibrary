@@ -135,4 +135,4 @@ STATIC_URL = '/main_app/static/'
 
 STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'main_app/static'))
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage',

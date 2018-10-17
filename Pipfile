@@ -8,6 +8,8 @@ verify_ssl = true
 django = "*"
 gunicorn = "*"
 django-heroku = "*"
+django-materializecss-form = "*"
+boto3 = "*"
 
 [requires]
 
