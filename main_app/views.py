@@ -11,11 +11,6 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 
-# def update_profile(request, user_id):
-#     user = User.objects.get(pk=user_id)
-#     user.profile.bio = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
-#     user.save()
-
 def index(request):
     return render(request, 'index.html')
 
@@ -64,7 +59,7 @@ class ToolCreate(CreateView):
 
 class ToolUpdate(UpdateView):
     model = Tool
-    fields = '__all__'
+    fields = ['name', 'description', 'category', 'rating']
 
 @method_decorator(login_required, name='dispatch')
 class ToolDelete(DeleteView):

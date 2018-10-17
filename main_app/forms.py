@@ -19,3 +19,8 @@ class CategoryForm(ModelForm):
     class Meta:
         model = Category
         fields = '__all__'
+
+# class ToolForm(ModelForm):
+#     class Meta:
+#             model = Tool
+#             fields = ('name', 'description')

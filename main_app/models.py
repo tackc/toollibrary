@@ -46,6 +46,9 @@ class Tool(models.Model):
     tool_description = models.TextField(max_length=250)
     tool = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return reverse('tools_detail', kwargs={'tool_id': tool.id})
+
 class Category(models.Model):
     tool_category = models.IntegerField(
         choices=CATEGORIES,
