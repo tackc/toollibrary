@@ -6,11 +6,12 @@ from datetime import date
 from django.urls import reverse
 
 RATINGS = (
-    ('1', 'Broken'),
-    ('2', 'Poor'),
-    ('3', 'Ok'),
-    ('4', 'Good'),
-    ('5', 'Excellent')
+    ('1', '-'),
+    ('2', 'Broken'),
+    ('3', 'Poor'),
+    ('4', 'Ok'),
+    ('5', 'Good'),
+    ('6', 'Excellent')
 )
 
 CATEGORIES = (
@@ -43,17 +44,26 @@ class Profile(models.Model):
 class Tool(models.Model):
     tool_name = models.CharField(max_length=75)
     tool_description = models.TextField(max_length=250)
+    tool = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Category(models.Model):
-    tool_category = models.CharField(max_length=75)
+    tool_category = models.IntegerField(
+        choices=CATEGORIES,
+        default=CATEGORIES[0][0]
+    )
+    tool = models.ForeignKey(Tool, on_delete=models.CASCADE)
+    def get_absolute_url(self):
+        return reverse('tool_list')
 
 class ToolRating(models.Model):
     date = models.DateField('Rating date')
-    rating = models.CharField(
-        max_length=1,
+    rating = models.IntegerField(
         choices=RATINGS,
         default=RATINGS[0][0]
     )
+    tool = models.ForeignKey(Tool, on_delete=models.CASCADE)
+    def get_absolute_url(self):
+        return reverse('tool_list')
 
 class ToolPhoto(models.Model):
     url = models.CharField(max_length=200)

@@ -9,18 +9,11 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                {{ profile_form.as_p }}
+                <!-- {{ profile_form.as_p }} -->
                 <button type="submit">Sign up</button>
             </form>
         </div>
     </div>
 </div>    
-<!-- <div class="centered">
-        <h3>Sign up</h3>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Sign up</button>
-        </form>
-    </div> -->
+
 {% endblock %}
