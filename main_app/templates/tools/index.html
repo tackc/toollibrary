@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1>Tool List</h1>
+<a href="/tools/create">Add a New Tool!</a>
+
+{% for tool in tools %}
+    <div class="card">
+        <a href="{% url 'tools_detail' tool.id %}">
+            <div class="card-content">
+                <span class="card-title">{{ tool.name }}</span>
+                <p>Name: {{ tool.name }}</p>
+                <p>Description: {{ tool.description }}</p>
+            </div>
+        </a>
+        <a href="/user/{{tool.user.username}}">
+            <p>Owned By: {{tool.user.username }}</p>
+        </a>
+    </div>
+{% endfor %}
+
+{% endblock %}

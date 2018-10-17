@@ -83,7 +83,7 @@ def add_photo(request, tool_id):
             s3.upload_fileobj(photo_file, BUCKET, key)
             # build the full url string
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
-            photo = Photo(url=url, cat_id=cat_id)
+            photo = Photo(url=url, tool_id=tool_id)
             photo.save()
         except:
             print('An error occurred uploading file to S3')
@@ -122,7 +122,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return HttpResponseRedirect('profile')
+            return HttpResponseRedirect('/profile')
         else:
             print("this is the form...")
             print(form)

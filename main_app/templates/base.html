@@ -24,9 +24,9 @@
                     <ul class="right">
                         {% if user.is_authenticated %}
                         <li> | </li>
-                        <li> Hello, {{ user.username }}! </li>
-                        <li> | </li>
-                        <li><a href="/profile">Profile</a></li>
+                        <li><a href="{% url 'profile' user.username %}">Hello, {{ user.username }}!</a></li>
+                        <!-- <li> | </li>
+                        <li><a href="/profile">Profile</a></li> -->
                         <li> | </li>
                         <li><a href="/tools">My Tools</a></li>
                         <li> | </li>
