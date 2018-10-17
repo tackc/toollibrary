@@ -10,24 +10,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 
 # Create your views here.
-class ToolCreate(CreateView):
-    model = Tool
-    fields = '__all__'
-    
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.user = self.request.user
-        self.object.save()
-        return HttpResponseRedirect('/tools/')
-
-class ToolUpdate(UpdateView):
-    model = Tool
-    fields = '__all__'
-
-@method_decorator(login_required, name='dispatch')
-class ToolDelete(DeleteView):
-    model = Tool
-    success_url = '/tools'
 
 # def update_profile(request, user_id):
 #     user = User.objects.get(pk=user_id)
@@ -36,15 +18,6 @@ class ToolDelete(DeleteView):
 
 def index(request):
     return render(request, 'index.html')
-
-def tools_index(request):
-    tools = Tool.objects.all()
-    return render(request, 'tools/index.html', {'tools': tools})
-
-def tools_detail(request, tool_id):
-    tool = Tool.objects.get(id=tool_id)
-    return render(request, 'tools/detail.html')
-
 
 # Update profile
 @login_required
@@ -66,6 +39,38 @@ def update_profile(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
+
+
+# TOOLS PAGES
+def tools_index(request):
+    tools = Tool.objects.all()
+    return render(request, 'tools/index.html', {'tools': tools})
+
+def tools_detail(request, tool_id):
+    tool = Tool.objects.get(id=tool_id)
+    return render(request, 'tools/detail.html', {
+    	'tool': tool
+    })
+
+class ToolCreate(CreateView):
+    model = Tool
+    fields = '__all__'
+    
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect('/tools/')
+
+class ToolUpdate(UpdateView):
+    model = Tool
+    fields = '__all__'
+
+@method_decorator(login_required, name='dispatch')
+class ToolDelete(DeleteView):
+    model = Tool
+    success_url = '/tools'
+
 
 # Login, logout, signup, profile views
 def login_view(request):
