@@ -37,6 +37,10 @@ def update_profile(request):
 
 
 # TOOLS PAGES
+# def add_tool(request):
+#     tools = Tool.objects.all()
+#     return render(request, 'tools/index.html', {'tools': tools})
+
 def tools_index(request):
     tools = Tool.objects.all()
     return render(request, 'tools/index.html', {'tools': tools})
