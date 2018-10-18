@@ -9,7 +9,7 @@
                 <span class="card-title"><h3>About me...</h3></span>
                 <form method="post">
                     {% csrf_token %}
-                    {{ profile_form.as_p }}
+                    {{ form.as_p }}
                     <button type="submit">Update Details</button>
                 </form>
             </div>

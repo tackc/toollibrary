@@ -48,7 +48,7 @@ def tools_index(request):
 def tools_detail(request, tool_id):
     tool = Tool.objects.get(id=tool_id)
     return render(request, 'tools/detail.html', {
-    	'tool': tool
+    	# 'tool': tool
     })
 
 class ToolCreate(CreateView):
