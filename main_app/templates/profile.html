@@ -7,8 +7,17 @@
         <div class="card blue-grey darken-1">
             <div class="card-content white-text">
                 <span class="card-title"><h3>About me...</h3></span>
-                <p>{{profile.first_name}}</p>
-                <p>{{profile.bio}}</p>
+                    <div class="centered-card">
+                        <h6>First Name: </h6> <p>{{profile.first_name}}</p>
+                        <h6>Last Name: </h6> <p>{{profile.last_name}}</p>
+                        <h6>Bio: </h6> <p>{{profile.bio}}</p>
+                        <h6>Address 1: </h6> <p>{{profile.address1}}</p>
+                        <h6>Address 2: </h6> <p>{{profile.address2}}</p>
+                        <h6>City: </h6> <p>{{profile.city}}</p>
+                        <h6>State: </h6> <p>{{profile.state}}</p>
+                        <h6>Zip Code: </h6> <p>{{profile.zipcode}}</p>
+                    </div>
+                <br>
                 <a href={{update_url}} type="button">Update Details</button>
             </div>
         </div>
