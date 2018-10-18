@@ -30,7 +30,7 @@
         </form>
     </div>
     <div class="col s6">
-        <form action="{% url 'add_tool' tool.id %}" method="POST">
+        <form action="{% url 'tools_create' %}" method="POST">
             {% csrf_token %}
             {{ tool_form.as_p }}
             <input type="submit" class="btn" value="Add Tool">

@@ -5,11 +5,6 @@ class LoginForm(Form):
     username = CharField(label="User Name", max_length=64)
     password = CharField(widget=PasswordInput())
 
-# class UserForm(ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ('first_name', 'last_name', 'email')
-
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
@@ -22,5 +17,5 @@ class CategoryForm(ModelForm):
 
 # class ToolForm(ModelForm):
 #     class Meta:
-#             model = Tool
-#             fields = ('name', 'description')
+#         model = Tool
+#         fields = ('name', 'description')

@@ -29,8 +29,15 @@ def tools_detail(request, tool_id):
     	'tool': tool
     })
 
+# def tools_detail(request):
+#     tool = Tool.objects.get(tool=tool)
+#     update_url = f"/tool/{tool.id}/update"
+#     return render(request, 'tools/detail.html', {'tool': tool, 'update_url': update_url})
+
+
 class ToolCreate(CreateView):
     model = Tool
+    # fields = ['name', 'description', 'category', 'rating']
     fields = '__all__'
     
     def form_valid(self, form):
@@ -42,6 +49,12 @@ class ToolCreate(CreateView):
 class ToolUpdate(UpdateView):
     model = Tool
     fields = ['name', 'description', 'category', 'rating']
+    
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.tool = self.request.tool
+        self.object.save()
+        return HttpResponseRedirect(f'/{self.request.tool.tool_id}/tool')
 
 @method_decorator(login_required, name='dispatch')
 class ToolDelete(DeleteView):
@@ -113,27 +126,6 @@ def profile(request, username):
     profile = Profile.objects.get(user=user)
     update_url = f"/users/{user.id}/profile/update"
     return render(request, 'profile.html', {'username': username, 'profile': profile, 'update_url': update_url})
-
-# Update profile
-# @login_required
-# def update_profile(request, username):
-#     if request.method == 'POST':
-#         form = ProfileForm(request.POST)
-#         if form.is_valid():
-#             profile = form.save()
-#             return HttpResponseRedirect(f"/{username}/profile")
-#         else:
-#             print("form was invalid somehow")
-#             print(form.errors)
-#     else:
-#         user = User.objects.get(username=request.user.username)
-#         profile = Profile.objects.get(user=user)
-#         # profile = user.profile
-#         # print("this is the user profile:")
-#         # print(profile.bio)
-#         # print(profile.street1)
-#         form = ProfileForm(instance=profile)
-#         return render(request, 'profile.html', {'username': username, 'profile': profile, 'form': form})
 
 class ProfileUpdate(UpdateView):
     model = Profile
