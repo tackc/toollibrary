@@ -36,7 +36,7 @@ class Profile(models.Model):
     zipcode = models.CharField(max_length=5, null=True)
 
     def __str__(self):
-        return "self.user"
+        return self.user.username + "'s Profile"
     
     def get_absolute_url(self):
         return reverse('users_detail', kwargs={'user_id': user.id})

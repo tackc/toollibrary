@@ -14,28 +14,6 @@ from django.http import HttpResponseRedirect
 def index(request):
     return render(request, 'index.html')
 
-# Update profile
-@login_required
-def update_profile(request):
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, _('Your profile was successfully updated!'))
-            return redirect('settings/profile')
-        else:
-            messages.error(request, _('Please correct the error below.'))
-    else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'profiles/profile.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
-    })
-
-
 # TOOLS PAGES
 # def add_tool(request):
 #     tools = Tool.objects.all()
@@ -48,7 +26,7 @@ def tools_index(request):
 def tools_detail(request, tool_id):
     tool = Tool.objects.get(id=tool_id)
     return render(request, 'tools/detail.html', {
-    	# 'tool': tool
+    	'tool': tool
     })
 
 class ToolCreate(CreateView):
@@ -121,7 +99,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return HttpResponseRedirect('/profile')
+            return HttpResponseRedirect(f'/users/{user.id}/profile/update')
         else:
             print("this is the form...")
             print(form)
@@ -131,9 +109,38 @@ def signup(request):
 
 @login_required
 def profile(request, username):
-    if username == request.user.username:
-        user = User.objects.get(username=username)
-        profile = Profile.objects.filter(user=user)
-        return render(request, 'profile.html', {'username': username, 'profile': profile})
-    else:
-        return HttpResponseRedirect('/')
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user)
+    update_url = f"/users/{user.id}/profile/update"
+    return render(request, 'profile.html', {'username': username, 'profile': profile, 'update_url': update_url})
+
+# Update profile
+# @login_required
+# def update_profile(request, username):
+#     if request.method == 'POST':
+#         form = ProfileForm(request.POST)
+#         if form.is_valid():
+#             profile = form.save()
+#             return HttpResponseRedirect(f"/{username}/profile")
+#         else:
+#             print("form was invalid somehow")
+#             print(form.errors)
+#     else:
+#         user = User.objects.get(username=request.user.username)
+#         profile = Profile.objects.get(user=user)
+#         # profile = user.profile
+#         # print("this is the user profile:")
+#         # print(profile.bio)
+#         # print(profile.street1)
+#         form = ProfileForm(instance=profile)
+#         return render(request, 'profile.html', {'username': username, 'profile': profile, 'form': form})
+
+class ProfileUpdate(UpdateView):
+    model = Profile
+    fields = ['first_name', 'last_name', 'bio', 'street1', 'street2', 'city', 'state', 'zipcode']
+    
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(f'/{self.request.user.username}/profile')

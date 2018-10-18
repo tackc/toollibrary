@@ -7,6 +7,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name="logout"),
     path('signup/', views.signup, name='signup'),
     path('<username>/profile', views.profile, name='profile'),
+    path('users/<int:pk>/profile/update/', views.ProfileUpdate.as_view(), name='profile_update'),
     # TOOLS PAGES
     path('tools/', views.tools_index, name='tools_index'),
     path('tools/<int:tool_id>', views.tools_detail, name='tools_detail'),
