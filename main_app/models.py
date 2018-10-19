@@ -49,8 +49,8 @@ class Tool(models.Model):
     def __str__(self):
         return self.tool_name
 
-    # def get_absolute_url(self):
-    #     return reverse('tools_detail', kwargs={'tool_id': tool.id})
+    def get_absolute_url(self):
+        return reverse('tools_detail', kwargs={'tool_id': self.id})
 
 class Category(models.Model):
     tool_category = models.IntegerField(

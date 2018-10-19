@@ -1,18 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
     
-<div class="centered">
-    <div class="col s6 m6">
-        <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-            <span class="card-title"><h3>Add Tool</h3></span>
-            <form action="" method="post">
-                {% csrf_token %}
-                <table>{{ form.as_table }}</table>
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
-                <!-- <input type="submit" value="Submit!"> -->
-            </form>
-        </div>
+<div class="col s6 m6">
+    <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+        <span class="card-title"><h3>Add Tool</h3></span>
+        <form action="" method="post">
+            {% csrf_token %}
+            <table>{{ form.as_table }}</table>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+            <!-- <input type="submit" value="Submit!"> -->
+        </form>
     </div>
 </div>
 

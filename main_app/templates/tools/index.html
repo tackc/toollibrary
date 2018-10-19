@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div center-align>
+
     <h3>Tool List</h3>
     <a href="/tools/create" class="waves-effect waves-light btn">Add a New Tool!</a>
-    <!-- <a href="/tools/create">Add a New Tool!</a> -->
-
+    <br>
+    <br>
+<div class="center-align">
     {% for tool in tools %}
-    <div class="card blue-grey darken-1 col s8 m8 xl6">
+    <div class="card blue-grey darken-1 col s8 m8 xl6 inline-block">
         <a href="{% url 'tools_detail' tool.id %}">
             <div class="card-content white-text">
                 <span class="card-title">{{ tool.tool_name }}</span>

@@ -80,11 +80,11 @@ class ToolUpdate(UpdateView):
     model = Tool
     fields = ['tool_name', 'tool_description']
     
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.tool = tools_create.request.tool
-        self.object.save()
-        return HttpResponseRedirect(f'/{self.request.tool.tool_id}/tool')
+    # def form_valid(self, form):
+    #     self.object = form.save(commit=False)
+    #     self.object.tool = self.request.tool
+    #     self.object.save()
+    #     return HttpResponseRedirect(f'/{self.request.tool.tool_id}/tool')
         # return render(request, 'main_app/tool_form.html', {'form': form})
 
 @method_decorator(login_required, name='dispatch')

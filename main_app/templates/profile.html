@@ -1,18 +1,18 @@
 {% extends 'base.html' %}\
 {% block content %}
 
-<div class="centered main-content">
+<!-- <div class="centered main-content"> -->
     <div class="col s8 m8">
         <div class="card blue-grey darken-1">
-                <h1>{{ username }}'s profile:</h1>
+                <h3>{{ username }}'s profile:</h3>
             <div class="card-content white-text">
                 <span class="card-title"><h3>About me...</h3></span>
                     <div class="centered-card">
                         <h6>First Name: {{profile.first_name}}</h6>
                         <h6>Last Name: {{profile.last_name}}</h6>
                         <h6>Bio: {{profile.bio}}</h6>
-                        <h6>Address 1: {{profile.address1}}</h6>
-                        <h6>Address 2: {{profile.address2}}</h6>
+                        <h6>Address 1: {{profile.street1}}</h6>
+                        <h6>Address 2: {{profile.street2}}</h6>
                         <h6>City: {{profile.city}}</h6> 
                         <h6>State: {{profile.state}}</h6>
                         <h6>Zip Code: {{profile.zipcode}}</h6> 
@@ -22,7 +22,7 @@
             </div>
         </div>
     </div> 
-</div>  
+<!-- </div>   -->
 {% for tool in tools %}
     <a href="/tools/{{ tool.id }}">
     <h3>{{ tool.name }}</h3>
