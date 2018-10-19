@@ -6,7 +6,7 @@
     <a href="/tools/create" class="waves-effect waves-light btn">Add a New Tool!</a>
     <br>
     <br>
-<div class="center-align">
+<!-- <div class="center-align"> -->
     {% for tool in tools %}
     <div class="card blue-grey darken-1 col s8 m8 xl6 inline-block">
         <a href="{% url 'tools_detail' tool.id %}">
@@ -16,11 +16,12 @@
                 <p>Description: {{ tool.tool_description }}</p>
             </div>
         </a>
-        <a href="/user/{{tool.user.username}}">
-            <p>Owned By: {{tool.user.username }}</p>
+        <!-- <a href="'users/<int:pk>/profile"> -->
+        <!-- <a href="/user/{{user}}"> -->
+            <p class="white-text">Owned By: {{tool.user.username }}</p>
         </a>
     </div>  
-</div>
+<!-- </div> -->
 
 {% endfor %}
 {% endblock %}

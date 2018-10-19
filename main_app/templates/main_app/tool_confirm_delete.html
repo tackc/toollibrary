@@ -6,17 +6,10 @@
 
     <p>Are you sure you want to delete this tool: {{ tool }}?</p>
 
-    <div class="card-action">
-        <form action="" method="POST">
-            {% csrf_token %}
-            <input type="submit" value="Yes, delete.">
-            <a href="/tools">CANCEL</a>
-        </form>
-    </div>
-    <!-- <form action="" method="POST">
+    <form action="" method="POST">
         {% csrf_token %}
         <input type="submit" value="Yes, delete.">
         <a href="/tools">CANCEL</a>
-    </form> -->
+    </form>
 
 {% endblock %}

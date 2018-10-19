@@ -53,9 +53,9 @@ table {
     align-items: center;
 }
 
-.right {
-    align: middle;
-}
+/* .right {
+    align-content: middle;
+} */
 
 .parallax-container .parallax {
     height: 450px;
