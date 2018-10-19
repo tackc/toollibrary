@@ -6,21 +6,21 @@ from datetime import date
 from django.urls import reverse
 
 RATINGS = (
-    ('1', '-'),
-    ('2', 'Broken'),
-    ('3', 'Poor'),
-    ('4', 'Ok'),
-    ('5', 'Good'),
-    ('6', 'Excellent')
+    (1, '-'),
+    (2, 'Broken'),
+    (3, 'Poor'),
+    (4, 'Ok'),
+    (5, 'Good'),
+    (6, 'Excellent')
 )
 
 CATEGORIES = (
-    ('1', '-'),
-    ('2', 'Carpentry & Woodworking'),
-    ('3', 'Electrical & Soldering'),
-    ('4', 'Plumbing'),
-    ('5', 'Lawn & Garden'),
-    ('6', 'Miscellaneous')
+    (1, '-'),
+    (2, 'Carpentry & Woodworking'),
+    (3, 'Electrical & Soldering'),
+    (4, 'Plumbing'),
+    (5, 'Lawn & Garden'),
+    (6, 'Miscellaneous')
 )
 
 # Create your models here.
@@ -46,25 +46,35 @@ class Tool(models.Model):
     tool_description = models.TextField(max_length=250)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def get_absolute_url(self):
-        return reverse('tools_detail', kwargs={'tool_id': tool.id})
+    def __str__(self):
+        return self.tool_name
+
+    # def get_absolute_url(self):
+    #     return reverse('tools_detail', kwargs={'tool_id': tool.id})
 
 class Category(models.Model):
     tool_category = models.IntegerField(
         choices=CATEGORIES,
         default=CATEGORIES[0][0]
     )
-    tool = models.ForeignKey(Tool, on_delete=models.CASCADE)
+    tools = models.ManyToManyField(Tool)
+
+    def __str__(self):
+        return str(CATEGORIES[self.tool_category][1])
+
     def get_absolute_url(self):
         return reverse('tool_list')
 
 class ToolRating(models.Model):
-    date = models.DateField('Rating date')
     rating = models.IntegerField(
         choices=RATINGS,
         default=RATINGS[0][0]
     )
-    tool = models.ForeignKey(Tool, on_delete=models.CASCADE)
+    tools = models.ManyToManyField(Tool)
+
+    def __str__(self):
+        return str(RATINGS[self.rating][1])
+
     def get_absolute_url(self):
         return reverse('tool_list')
 

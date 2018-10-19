@@ -7,9 +7,10 @@
     <div class="col s6">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ tool.name }}</span>
-                <p>Name: {{ tool.name }}</p>
-                <p>Description: {{ tool.description }}</p>
+                <span class="card-title">{{ tool.tool_name }}</span>
+                <p>Description: {{ tool.tool_description }}</p>
+                <p>Category: {{ tool.tool_category }}</p>
+                <p>Rating: {{ tool.rating }}</p>
             </div>
             <div class="card-action">
                 <a href="{% url 'tools_update' tool.id %}">Edit</a>

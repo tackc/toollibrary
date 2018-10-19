@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm, ProfileForm
+from .forms import LoginForm, ProfileForm, ToolForm
 from .models import Tool, Profile, Category, ToolRating
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -34,17 +34,48 @@ def tools_detail(request, tool_id):
 #     update_url = f"/tool/{tool.id}/update"
 #     return render(request, 'tools/detail.html', {'tool': tool, 'update_url': update_url})
 
+def tools_create(request):
+    if request.method == 'POST':
+        updated_data = request.POST.copy()
 
-class ToolCreate(CreateView):
-    model = Tool
-    # fields = ['name', 'description', 'category', 'rating']
-    fields = '__all__'
+        category = int(updated_data.get('category'))
+        rating = int(updated_data.get('rating'))
+
+        del updated_data['category']
+        del updated_data['rating']
+
+        updated_data['category'] = category
+        updated_data['rating'] = rating
+
+        print("this is the updated data:")
+        print(updated_data)
+
+        form = ToolForm(updated_data)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
+            return HttpResponseRedirect('/tools/')
+        else:
+            print("we got errors:")
+            print(form.errors)
+    else:
+        form = ToolForm(request.user)
+        return render(request, 'main_app/tool_form.html', {'form': form})
+
+# class ToolCreate(CreateView):
+#     model = Tool
+#     # fields = ['tool_name', 'tool_description', 'category', 'rating']
+#     # fields = '__all__'
+#     # categories = Category.objects.all()
+#     # ratings = ToolRating.objects.all()
+#     form_class = ToolForm
     
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.user = self.request.user
-        self.object.save()
-        return HttpResponseRedirect('/tools/')
+#     def form_valid(self, form):
+#         self.object = form.save(commit=False)
+#         self.object.user = self.request.user
+#         self.object.save()
+#         return HttpResponseRedirect('/tools/')
 
 class ToolUpdate(UpdateView):
     model = Tool
@@ -124,8 +155,9 @@ def signup(request):
 def profile(request, username):
     user = User.objects.get(username=username)
     profile = Profile.objects.get(user=user)
+    tools = Tool.objects.filter(user=user)
     update_url = f"/users/{user.id}/profile/update"
-    return render(request, 'profile.html', {'username': username, 'profile': profile, 'update_url': update_url})
+    return render(request, 'profile.html', {'username': username, 'profile': profile, 'update_url': update_url, 'tools': tools})
 
 class ProfileUpdate(UpdateView):
     model = Profile
