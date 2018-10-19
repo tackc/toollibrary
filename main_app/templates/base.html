@@ -25,12 +25,8 @@
                         {% if user.is_authenticated %}
                         <li> | </li>
                         <li><a href="{% url 'profile' user.username %}">Hello, {{ user.username }}!</a></li>
-                        <!-- <li> | </li>
-                        <li><a href="/profile">Profile</a></li> -->
                         <li> | </li>
                         <li><a href="/tools">All Tools</a></li>
-                        <li> | </li>
-                        <li><a href="/tools">My Tools</a></li>
                         <li> | </li>
                         <li><a href="/tools/create">Add Tool</a></li>
                         <li> | </li>
@@ -46,13 +42,13 @@
             </nav>
         </header>
 
-        <main>
+        <main class="center-align">
             {% block content %}
             {% endblock %}
         </main>
 
         <footer class="page-footer yellow accent-4">
-            <div class="right container">© 2018 Tools Everywhere!</div>
+            <div class="right black-text">© 2018 Tools Everywhere!</div>
         </footer>
         
     {% block javascript %}

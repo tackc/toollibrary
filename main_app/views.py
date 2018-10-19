@@ -9,6 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+BUCKET = 'catcollector'
+
 # Create your views here.
 
 def index(request):
@@ -18,7 +21,7 @@ def index(request):
 # def add_tool(request):
 #     tools = Tool.objects.all()
 #     return render(request, 'tools/index.html', {'tools': tools})
-
+@login_required
 def tools_index(request):
     tools = Tool.objects.all()
     return render(request, 'tools/index.html', {'tools': tools})
@@ -36,21 +39,17 @@ def tools_detail(request, tool_id):
 
 def tools_create(request):
     if request.method == 'POST':
-        updated_data = request.POST.copy()
+        # updated_data = request.POST.copy()
+        # category = int(updated_data.get('category'))
+        # rating = int(updated_data.get('rating'))
+        # del updated_data['category']
+        # del updated_data['rating']
+        # updated_data['category'] = category
+        # updated_data['rating'] = rating
+        # print("this is the updated data:")
+        # print(updated_data)
 
-        category = int(updated_data.get('category'))
-        rating = int(updated_data.get('rating'))
-
-        del updated_data['category']
-        del updated_data['rating']
-
-        updated_data['category'] = category
-        updated_data['rating'] = rating
-
-        print("this is the updated data:")
-        print(updated_data)
-
-        form = ToolForm(updated_data)
+        form = ToolForm(request.POST)
         if form.is_valid():
             data = form.save(commit=False)
             data.user = request.user
@@ -60,7 +59,7 @@ def tools_create(request):
             print("we got errors:")
             print(form.errors)
     else:
-        form = ToolForm(request.user)
+        form = ToolForm()
         return render(request, 'main_app/tool_form.html', {'form': form})
 
 # class ToolCreate(CreateView):
@@ -79,13 +78,14 @@ def tools_create(request):
 
 class ToolUpdate(UpdateView):
     model = Tool
-    fields = ['name', 'description', 'category', 'rating']
+    fields = ['tool_name', 'tool_description']
     
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.tool = self.request.tool
+        self.object.tool = tools_create.request.tool
         self.object.save()
         return HttpResponseRedirect(f'/{self.request.tool.tool_id}/tool')
+        # return render(request, 'main_app/tool_form.html', {'form': form})
 
 @method_decorator(login_required, name='dispatch')
 class ToolDelete(DeleteView):

@@ -16,13 +16,13 @@ class CategoryForm(ModelForm):
         fields = '__all__'
 
 class ToolForm(ModelForm):
-    category = ModelMultipleChoiceField(queryset=Category.objects.all())
-    rating = ModelMultipleChoiceField(queryset=ToolRating.objects.all())
+    # category = ModelMultipleChoiceField(queryset=Category.objects.all())
+    # rating = ModelMultipleChoiceField(queryset=ToolRating.objects.all())
     class Meta:
         model = Tool
         fields = ('tool_name', 'tool_description')
-    def __init__(self, user, *args, **kwargs):
-        super(ToolForm, self).__init__(*args, **kwargs)
-        self.fields['category'].queryset = Category.objects.all()
-        self.fields['rating'].queryset = ToolRating.objects.all()
+    # def __init__(self, user, *args, **kwargs):
+    #     super(ToolForm, self).__init__(*args, **kwargs)
+    #     self.fields['category'].queryset = Category.objects.all()
+    #     self.fields['rating'].queryset = ToolRating.objects.all()
 

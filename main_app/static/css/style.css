@@ -11,13 +11,17 @@ main {
 h3 {
     font-family: 'Bungee', cursive;
 }
-
 form {
     max-width: 50%;
+    align-content: center;
 }
 
 nav li a {
     color: black !important;
+}
+
+.main-content {
+    width: 50%;
 }
 
 .card {
@@ -40,7 +44,10 @@ table {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+}
+
+.right {
+    align: middle;
 }
 
 .parallax-container .parallax {
@@ -52,13 +59,3 @@ table {
     height: 100vh;
     min-width: 100vw;
 }
-
-/* @media only screen and (min-width : 768px) {
-    .parallax-container .parallax {
-        background-size: cover;
-        min-height: 100%;
-        min-width: 100%;
-        width: auto;
-        /* overflow: hidden; */
-    }
-} */
